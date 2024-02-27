@@ -3,28 +3,31 @@ const router= express.Router();
 const Controller=require("../controller/teacherController");
 const teacherValidator=require("../MV/Validation/teacherValidators");
 const validator=require("../MV/Validation/validator")
+const {login}=require("../controller/authonticationController")
+const {isTeacher,isAdmin,isAdminOrTeacher, isSupervisor}=require("../MV/Authonticate/AuthonticartionMV")
+
 
 
 router.route("/teachers")
-      .get(Controller.getAllTeachers)
+      .get(isAdmin,Controller.getAllTeachers)
       
-      .post( teacherValidator.addTeacher, 
-            // validator,
+      .post(isAdmin, teacherValidator.addTeacher, 
+            validator,
             Controller.addTeacher)
 
-      .patch(teacherValidator.updateTeacher, 
+      .patch(isTeacher,login,teacherValidator.updateTeacher, 
             validator,
             Controller.updateTeacher)
 
       
 
 router.route("/teachers/:id")
-      .get(teacherValidator.checkID,
+      .get(isTeacher,teacherValidator.checkID,
             validator,
             Controller.getTeacherByID)
             
-      .delete(Controller.deleteTeacher)  
+      .delete(isAdminOrTeacher,login,Controller.deleteTeacher)  
 
-router.get("/teachers/supervisors",validator,Controller.getSupervisors);
+router.get("/teachers/supervisors",isSupervisor,validator,Controller.getSupervisors);
 
 module.exports=router;

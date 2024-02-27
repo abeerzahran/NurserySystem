@@ -3,22 +3,25 @@ const router= express.Router();
 const Controller=require("../controller/classController");
 const classValidator=require("../MV/Validation/classValidators");
 const validator=require("../MV/Validation/validator")
+const {isTeacher,isAdmin,isAdminOrTeacher,isSupervisor}=require("../MV/Authonticate/AuthonticartionMV");
+const { login } = require("../controller/authonticationController");
+
 
 
 router.route("/class")
-      .get(Controller.getAllClasses)
-      .post(classValidator.addClass,
+      .get(isAdmin,login,Controller.getAllClasses)
+      .post(isAdmin,login,classValidator.addClass,
         validator,
         Controller.addClass)
-      .patch(classValidator.updateClass,
+      .patch(isSupervisor,login,classValidator.updateClass,
         validator,
         Controller.updateClass)
-      .delete(Controller.deleteClass)  
+      .delete(isAdmin,login,Controller.deleteClass)  
 
-router.get("/class/:id",classValidator.checkID,validator,Controller.getClassByID);
+router.get("/class/:id",isSupervisor,login,classValidator.checkID,validator,Controller.getClassByID);
 
-router.get("/class/teachers/:id",classValidator.checkTeacherID,validator,Controller.getTeacherByID);
+router.get("/class/teachers/:id",isSupervisor,login,classValidator.checkTeacherID,validator,Controller.getTeacherByID);
 
-router.get("/class/child/:id",classValidator.checkID,validator,Controller.getChildByID);
+router.get("/class/child/:id",isSupervisor,login,classValidator.checkID,validator,Controller.getChildByID);
 
 module.exports=router;

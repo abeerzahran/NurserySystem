@@ -5,7 +5,8 @@ const mongoose=require("mongoose");
 const teacherRoute=require("./Route/teacherRoute");
 const childRoute=require("./Route/childRoute");
 const classRoute=require("./Route/classRoute");
-
+const loginRoute =require("./Route/authonticationRoute");
+const authenticationMV=require("./MV/Authonticate/AuthonticartionMV");
 
 const server=express();
 

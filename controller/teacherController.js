@@ -3,6 +3,7 @@ const teacher=require("../Model/teacher");
 // const {ObjectId}=require("mongodb");
 // import { ObjectId } from "mongoose";
 const { ObjectId } = require('mongodb');
+const Class =require("../Model/class")
 
 exports.getAllTeachers=(req,res,next)=>{
     teacher.find()
@@ -30,7 +31,12 @@ exports.getTeacherByID=(req,res,next)=>{
 }
 
 exports.getSupervisors=(req,res,next)=>{
-    res.status(200).json({data:[{},{},{}]});
+    Class.find()
+    .populate("supervisor")
+    .then((data)=>{
+        res.status(200).json(data);
+    })
+    .catch(error=>next(error));
 }
 
 exports.addTeacher=(req,res,next)=>{
