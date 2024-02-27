@@ -23,6 +23,6 @@ exports.updateClass=[
    
 
 ]
-exports.checkTeacherID= param("id").isObject().withMessage("the id should be objectID");
+exports.checkTeacherID= param("id").isInt().withMessage("the id should be number");
 
 exports.checkID= param("id").isInt().withMessage("the id should be number");
