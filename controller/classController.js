@@ -67,8 +67,8 @@ exports.addClass=async (req,res,next)=>{
             }
         })
         );
-        
-        obj .save()
+        const obj = new Class(req.body);
+        obj.save()
             .then((data)=>{
                 res.status(200).json(data);
             })
