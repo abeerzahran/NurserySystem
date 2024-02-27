@@ -42,6 +42,8 @@ server.use((req,res,next)=>{
 //settings
 server.use(express.json());
 //routing
+server.use(loginRoute);
+server.use(authenticationMV);
 
 server.use(teacherRoute);
 server.use(childRoute);

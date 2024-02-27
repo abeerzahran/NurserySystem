@@ -28,7 +28,7 @@ exports.getTeacherByID=(req,res,next)=>{
     })
 
 }
-//////////معملتهاش
+
 exports.getSupervisors=(req,res,next)=>{
     res.status(200).json({data:[{},{},{}]});
 }
