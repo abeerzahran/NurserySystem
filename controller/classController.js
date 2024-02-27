@@ -51,7 +51,7 @@ exports.getChildByID=(req,res,next)=>{
     res.status(200).json({data:{}});
 }
 
-exports.addClass=(req,res,next)=>{
+exports.addClass=async (req,res,next)=>{
     const supervisor= teacher.findById({"_id":req.body.supervisor});
     const children= req.body.children;
     // res.status(200).json(body.children);
@@ -60,13 +60,14 @@ exports.addClass=(req,res,next)=>{
         {
             throw new Error("in valid ID for Supervisor");
         }
+        await Promise.all(
         children.forEach(async(element) => {
             let Child= await child.findById({"_id":element});
             if(!Child)
             {
                 throw new Error("you entered invalid child ID");
             }
-        });
+        }));
         const obj= new Class(req.body);
         obj .save()
             .then((data)=>{
@@ -76,7 +77,7 @@ exports.addClass=(req,res,next)=>{
             
     }
     catch(error){
-        next(error);
+        res.json({error:error.message});
     }
 
     
