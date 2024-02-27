@@ -29,8 +29,8 @@ exports.getClassByID=(req,res,next)=>{
 }
 
 exports.getTeacherByID=(req,res,next)=>{
-    
-    teacher.findById({_id:req.params.id})
+    const teacherID= Class.findById({"_id":req.params.id});
+    teacher.findById({"_id":teacherID.supervisor})
     .then((data)=>{
         if(!data){
             throw new Error("invalid ID");
